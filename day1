@@ -1,0 +1,27 @@
+John was learning about arrays when his friend Ram arrived. Seeing John, Ram thought of a challenge for him. He challenged John to calculate the "measurement" of an array a of size n.
+Given a 0-indexed array, Ram defined the measurement of the array as the sum of the "sanities" of all the elements in the array. To calculate the sanity of each element in the array, the following operations need to be performed:
+
+Sort the given array.
+Calculate the sanity of an element in the array, which is defined as the sum of its original index (before sorting) and the index of its last occurrence in the new array (after sorting).
+Your task is to help John calculate the measurement of the array. Since the output may be too large, print it modulo 10^9+7.
+Note that duplicate elements may exist in the array.
+https://unstop.com/code/practice/250138
+
+MOD = 10**9 + 7
+
+n = int(input())
+a = list(map(int, input().split()))
+
+original      = [(val, idx) for idx, val in enumerate(a)]
+sorted_array  = sorted(original, key=lambda x: x[0])
+
+last_occurrence = {}
+for idx, (val, _) in enumerate(sorted_array):
+    last_occurrence[val] = idx
+
+measurement = 0
+for idx, val in enumerate(a):
+    sanity       = idx + last_occurrence[val]
+    measurement  = (measurement + sanity) % MOD
+
+print(measurement)
